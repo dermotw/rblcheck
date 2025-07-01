@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # coding: utf8
 """
 I need to test IPs in multible DNS RBLs
@@ -10,8 +11,18 @@ from __future__ import print_function
 import dns.resolver
 import sys
 BLOCKLISTS = [
-    "rbl.ttk-chita.ru", "zen.spamhaus.org", "recent.spam.dnsbl.sorbs.net",
-    "bl.spamcop.net"
+        "b.barracudacentral.org",
+        "sbl-xbl.spamhaus.org",
+        "pbl.spamhaus.org",
+        "zen.spamhaus.org",
+        "black.junkemailfilter.com",
+        "psbl.surriel.com",
+        "hil.habeas.com",
+        "bl.nordspam.com",
+        "bogons.cymru.com",
+        "dyna.spamrats.com",
+        "spam.spamrats.com",
+        "ubl.unsubscore.com"
 ]
 
 
@@ -29,15 +40,12 @@ def main():
         for rbl in BLOCKLISTS:
             try:
                 query = '.'.join(reversed(str(ip2test).split("."))) + "." + rbl
-                result = stub.query(query, "A")
-                verbose = stub.query(query, "TXT")
-                print('IP %s IS listed in %s: %s - %s' %
-                      (ip2test, rbl, result[0], verbose[0]))
+                result = stub.resolve(query, "A")
+                print('IP %s IS listed in %s: %s' %
+                      (ip2test, rbl, result[0]))
                 any_is_listed = True
             except dns.resolver.NXDOMAIN:
-                print('IP: %s is NOT listed in %s' % (ip2test, rbl))
-    if any_is_listed:
-        print("\nWARNING: At least one IP is listed in one or more RBLs")
+                pass
 
     sys.exit(1 if any_is_listed else 0)
 

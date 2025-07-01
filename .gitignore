@@ -55,3 +55,8 @@ docs/_build/
 
 # PyBuilder
 target/
+bin/
+lib64
+pyenv.cfg
+share/
+pyvenv.cfg
