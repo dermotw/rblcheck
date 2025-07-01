@@ -15,6 +15,7 @@ Python3
 Author
 ==
 - Vsevolod Sipakov <versus@suslika.net>
+- modified by Dermot Williams <dermot@deadlocked.org>
 
 License
 ==
